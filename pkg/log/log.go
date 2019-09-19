@@ -22,11 +22,8 @@ func ConfigureLogging() error {
 }
 
 func withHostname() *logrus.Entry {
-	hostname, err := os.Hostname()
-	if err != nil {
-		logger.Fatal(err.Error())
-	}
-	return logger.WithField("hostname", hostname)
+	cfg := root.GetConfig()
+	return logger.WithField("hostname", cfg.NodeName).WithField("log_level", cfg.LogLevel)
 }
 
 func AddFields(fields map[string]interface{}) *logrus.Entry {
