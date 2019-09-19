@@ -2,6 +2,24 @@ stages:
   - build
   - release
 
+build-image:
+  stage: build
+  script:
+    - make image
+  only:
+    - tags
+  tags:
+    - bronevik-ci
+
+push-image:
+  stage: release
+  script:
+    - make push
+  only:
+    - tags
+  tags:
+    - bronevik-ci
+
 #build_release:
 #  stage: build
 #  artifacts:
@@ -18,15 +36,6 @@ stages:
 #  tags:
 #    - bronevik-ci
 
-build-image:
-  stage: build
-  script:
-    - make image
-  only:
-    - tags
-  tags:
-    - bronevik-ci
-
 #release:
 #  stage: release
 #  variables:
@@ -39,12 +48,3 @@ build-image:
 #    - universe
 #  dependencies:
 #    - build_release
-
-push-image:
-  stage: release
-  script:
-    - make push
-  only:
-    - tags
-  tags:
-    - bronevik-ci
