@@ -22,7 +22,8 @@ WORKDIR /usr/share/zoneinfo
 RUN zip -r -0 /zoneinfo.zip .
 
 FROM scratch
-COPY --from=builder /app/bin/$APP /$APP
+ARG APP=dumpbeat
+COPY --from=builder /build/bin/$APP /$APP
 ENV ZONEINFO /zoneinfo.zip
 COPY --from=alpine /zoneinfo.zip /
 COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
