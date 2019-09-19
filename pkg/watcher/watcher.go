@@ -24,14 +24,14 @@ func (fsWatcher FSWatcher) watch(pf *common.ProcessedFiles) {
 		select {
 		case event, ok := <-fsWatcher.Events:
 			if !ok {
-				return
+				continue
 			}
 			log.Debug("event:", event)
 			if event.Op&fsnotify.Write == fsnotify.Write {
 				fileInfo, err := os.Stat(event.Name)
 				if err != nil {
 					log.Error(err.Error())
-					return
+					continue
 				}
 				if !fileInfo.IsDir() {
 					log.Debug("modified file:", event.Name)
@@ -42,13 +42,13 @@ func (fsWatcher FSWatcher) watch(pf *common.ProcessedFiles) {
 				fileInfo, err := os.Stat(event.Name)
 				if err != nil {
 					log.Error(err.Error())
-					return
+					continue
 				}
 				if fileInfo.IsDir() {
 					err := fsWatcher.Add(event.Name)
 					if err != nil {
 						log.Fatal(err.Error())
-						return
+						continue
 					}
 					log.Info(fmt.Sprintf("Added new directory %s for watch", event.Name))
 				}
@@ -57,13 +57,13 @@ func (fsWatcher FSWatcher) watch(pf *common.ProcessedFiles) {
 				err := fsWatcher.Remove(event.Name)
 				if err != nil {
 					log.Debug(err.Error())
-					return
+					continue
 				}
 				log.Info(fmt.Sprintf("Remove directory %s from watch", event.Name))
 			}
 		case err, ok := <-fsWatcher.Errors:
 			if !ok {
-				return
+				continue
 			}
 			log.Error("error:", err)
 		}
@@ -95,12 +95,12 @@ func FSWatch() {
 						fileInfo, err := os.Stat(file)
 						if err != nil {
 							log.Error(fmt.Sprintf("%s: Error stat file %s.", err.Error(), file))
-							return
+							continue
 						}
 						err = dump.VisitFileWithoutWaitTime(file, fileInfo, nil)
 						if err != nil {
 							log.Error(fmt.Sprintf("%s. Error visit file %s", err.Error(), file))
-							return
+							continue
 						}
 						pf.Delete(file)
 					}
