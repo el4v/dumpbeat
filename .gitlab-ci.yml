@@ -1,6 +1,22 @@
 stages:
   - build
-  - push
+  - release
+
+build_release:
+  stage: build
+  artifacts:
+    name: artifact
+    paths:
+      - artifact/
+    expire_in: 1 hour
+  script:
+    - make build
+    - mkdir ./artifact
+    - cp -rf ./bin/* ./artifact/
+  only:
+    - master
+  tags:
+    - bronevik-ci
 
 build-image:
   stage: build
@@ -11,8 +27,21 @@ build-image:
   tags:
     - bronevik-ci
 
+release:
+  stage: release
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - cp -rf ./artifact/* /srv/apps/releases/data/
+  only:
+    - master
+  tags:
+    - universe
+  dependencies:
+    - build_release
+
 push-image:
-  stage: push
+  stage: release
   script:
     - make push
   only:

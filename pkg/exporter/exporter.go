@@ -39,6 +39,9 @@ func CountUnprocessedFilesGaugeHandler(rootDir string) {
 	for {
 		count := 0.0
 		err := filepath.Walk(rootDir, func(path string, f os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
 			if f.IsDir() {
 				return nil
 			}
