@@ -9,7 +9,7 @@ build-image:
   only:
     - master
   tags:
-    - bronevik-ci
+    - bronevik-ci-2
 
 push-image:
   stage: release
@@ -18,7 +18,7 @@ push-image:
   only:
     - master
   tags:
-    - bronevik-ci
+    - bronevik-ci-2
 
 #build_release:
 #  stage: build
