@@ -1,0 +1,21 @@
+stages:
+  - build
+  - push
+
+build-image:
+  stage: build
+  script:
+    - make image
+  only:
+    - tags
+  tags:
+    - bronevik-ci
+
+push-image:
+  stage: push
+  script:
+    - make push
+  only:
+    - tags
+  tags:
+    - bronevik-ci
