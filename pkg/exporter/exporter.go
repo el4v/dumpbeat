@@ -14,7 +14,7 @@ import (
 var (
 	CountUnprocessedFilesGauge = prometheus.NewGauge(
 		prometheus.GaugeOpts{
-			Namespace: "dump_worker",
+			Namespace: "dumpbeat",
 			Name:      "count_files_in_dump_directory",
 			Help:      "Count files in dump root folder",
 		})
