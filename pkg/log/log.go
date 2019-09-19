@@ -23,7 +23,7 @@ func ConfigureLogging() error {
 
 func withHostname() *logrus.Entry {
 	cfg := root.GetConfig()
-	return logger.WithField("hostname", cfg.NodeName).WithField("log_level", cfg.LogLevel)
+	return logger.WithField("hostname", cfg.NodeName)
 }
 
 func AddFields(fields map[string]interface{}) *logrus.Entry {
