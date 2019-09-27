@@ -91,7 +91,7 @@ func FSWatch() {
 		for {
 			if len(pf.Files) > 0 {
 				for file, modifiedTime := range pf.Files {
-					if time.Since(modifiedTime) > 5*time.Second {
+					if time.Since(modifiedTime) > 10*time.Second {
 						fileInfo, err := os.Stat(file)
 						if err != nil {
 							log.Error(fmt.Sprintf("%s: Error stat file %s.", err.Error(), file))
