@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 // CleanupEmptyFolders remove empty folders exclude root dir and project dir
@@ -19,6 +20,9 @@ func CleanupEmptyFolders(rootDir string) error {
 		if fileInfo.IsDir() {
 			// Не удалять корневую директорию и директорию приложения
 			if rootDir == fileName {
+				return nil
+			}
+			if fileInfo.ModTime().After(time.Now().Add(-48 * time.Hour)) {
 				return nil
 			}
 			tmp := strings.TrimPrefix(strings.Replace(fileName, rootDir, "", 1), string(os.PathSeparator))
