@@ -6,7 +6,7 @@ os = $(word 1, $(temp))
 arch = $(word 2, $(temp))
 # GOOS?=linux
 # GOARCH?=amd64
-DOCKER_REGISTRY?=registry.bronevik.space
+DOCKER_REGISTRY?=registry.example.com
 COMMIT=$(shell git rev-parse --short HEAD)
 BUILD_TIME=$(shell date -u '+%Y-%m-%dT%H:%M:%SZ')
 
@@ -28,12 +28,12 @@ dep:
 	go mod download
 
 image:
-	docker build --build-arg "APP=${APP}" --build-arg "RELEASE=${RELEASE}" --build-arg "COMMIT=${COMMIT}" --tag "${DOCKER_REGISTRY}/tech/dumps/${APP}:${RELEASE}" $(PWD)
-	docker tag "${DOCKER_REGISTRY}/tech/dumps/${APP}:${RELEASE}" "${DOCKER_REGISTRY}/tech/dumps/${APP}:latest"
+	docker build --build-arg "APP=${APP}" --build-arg "RELEASE=${RELEASE}" --build-arg "COMMIT=${COMMIT}" --tag "${DOCKER_REGISTRY}/library/${APP}:${RELEASE}" $(PWD)
+	docker tag "${DOCKER_REGISTRY}/library/${APP}:${RELEASE}" "${DOCKER_REGISTRY}/library/${APP}:latest"
 
 push:
-	docker push "${DOCKER_REGISTRY}/tech/dumps/${APP}:${RELEASE}"
-	docker push "${DOCKER_REGISTRY}/tech/dumps/${APP}:latest"
+	docker push "${DOCKER_REGISTRY}/library/${APP}:${RELEASE}"
+	docker push "${DOCKER_REGISTRY}/library/${APP}:latest"
 
 help: Makefile
 	@echo

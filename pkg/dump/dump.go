@@ -155,7 +155,7 @@ func processFile(fileName string, fileInfo os.FileInfo, backup bool) (err error)
 		}
 	}
 	year, month, _ := fileInfo.ModTime().Date()
-	bucketName := fmt.Sprintf("bronevik-dumps-%d-%d", year, month)
+	bucketName := fmt.Sprintf("dumps-%d-%d", year, month)
 	d := Dump{
 		Content:         string(content),
 		Filename:        fileName,

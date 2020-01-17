@@ -9,7 +9,7 @@ build-image:
   only:
     - master
   tags:
-    - bronevik-ci-2
+    - ci
 
 push-image:
   stage: release
@@ -18,33 +18,4 @@ push-image:
   only:
     - master
   tags:
-    - bronevik-ci-2
-
-#build_release:
-#  stage: build
-#  artifacts:
-#    name: artifact
-#    paths:
-#      - artifact/
-#    expire_in: 1 hour
-#  script:
-#    - make build
-#    - mkdir ./artifact
-#    - cp -rf ./bin/* ./artifact/
-#  only:
-#    - master
-#  tags:
-#    - bronevik-ci
-
-#release:
-#  stage: release
-#  variables:
-#    GIT_STRATEGY: none
-#  script:
-#    - cp -rf ./artifact/* /srv/apps/releases/data/
-#  only:
-#    - master
-#  tags:
-#    - universe
-#  dependencies:
-#    - build_release
+    - ci
